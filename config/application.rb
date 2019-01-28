@@ -18,6 +18,8 @@ require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 
 module TweetApi
+
+
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -33,5 +35,15 @@ module TweetApi
     config.api_only = true
 
     config.middleware.use Rack::Attack
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
+
+
   end
+  
 end
