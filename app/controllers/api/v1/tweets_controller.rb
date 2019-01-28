@@ -3,7 +3,7 @@ module Api
         class TweetsController < ApplicationController
             include ActionController::HttpAuthentication::Token::ControllerMethods
 
-            before_action :authenticate, only:[:create, :destroy]
+            before_action :authenticate, only:[:create,:destroy]
 
             def index
                 @tweets = Tweet.order('created_at DESC')
@@ -25,7 +25,6 @@ module Api
                 
                 if @tweet
                     @tweet.destroy
-                    render json: {tweet: @tweet.id}, status: :deleted
                 else
                     render json: {tweet: "Not Found"}, status: :not_found
                 end
